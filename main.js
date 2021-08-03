@@ -3,12 +3,12 @@ var canvas = new fabric.Canvas('myCanvas');
 ball_x = 10;
 ball_y = 10;
 
-hole_y = 50;
-hole_x = 50;
+hole_y = 1000;
+hole_x = 100;
 
 
-ball_side = 5;
-ball_ns = 5;
+ball_side = 3;
+ball_ns = 3;
 
 function load_img() {
 	fabric.Image.fromURL("ball.png",
@@ -24,18 +24,18 @@ function load_img() {
 		});
 }
 
-function load_goal() {
-	fabric.Image.fromURL("golf-h.png", function (Img) {
-		hole_object = Img;
-		hole_object.scaleToWidth(50);
-		hole_object.scaleToHeight(50);
-		hole_object.set({
-			top: hole_y,
-			left: hole_x
-		})
-		canvas.add(hole_object);
-	});
-	new_image();
+function load_g() {
+	fabric.Image.fromURL("golf-h.png",
+		function (Img) {
+			g_object = Img;
+			g_object.scaleToWidth(85);
+			g_object.scaleToHeight(85);
+			g_object.set({
+				top: hole_x,
+				left: hole_y
+			});
+			canvas.add(g_object);
+		});
 }
 
 window.addEventListener("keydown", my_keydown);
@@ -68,17 +68,21 @@ function up() {
 		console.log("block image height = " + ball_ns);
 		console.log("When up arrow key is pressed, X = " + ball_x + " , Y = " + ball_y);
 		canvas.remove(player_object);
+		load_g();
 		load_img();
+		
 	}
 }
 
 function down() {
-	if (ball_y <= 460) {
+	if (ball_y <= 550) {
 		ball_y = ball_y + ball_ns;
 		console.log("block image height = " + ball_ns);
 		console.log("When down arrow key is pressed, X = " + ball_x + " , Y = " + ball_y);
 		canvas.remove(player_object);
+		load_g();
 		load_img();
+		
 	}
 }
 
@@ -88,16 +92,26 @@ function left() {
 		console.log("block image width = " + ball_side);
 		console.log("When left arrow key is pressed, X = " + ball_x + " , Y = " + ball_y);
 		canvas.remove(player_object);
+		load_g();
 		load_img();
+		
 	}
 }
 
 function right() {
-	if (ball_x <= 850) {
+	if (ball_x <= 1250) {
 		ball_x = ball_x + ball_side;
 		console.log("block image width = " + ball_side);
 		console.log("When right arrow key is pressed, X = " + ball_x + " , Y = " + ball_y);
 		canvas.remove(player_object);
+		load_g();
 		load_img();
+		
 	}
+}
+
+if((ball_x==hole_x)&&(ball_y==hole_y)) {
+	player_object.scaleToHeight(45);
+	document.getElementById("hd3").innerHTML="You have hit the goal !!!";
+	document.getElementById("myCanvas").style.borderColor-"red";
 }
